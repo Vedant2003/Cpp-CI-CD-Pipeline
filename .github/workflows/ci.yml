@@ -1,0 +1,31 @@
+
+name: C++ CI Pipeline
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Download repository code
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      # Step 2: Configure CMake
+      - name: Configure CMake
+        run: cmake -S . -B build
+
+      # Step 3: Build C++ application and tests
+      - name: Build Project
+        run: cmake --build build --parallel 4
+
+      # Step 4: Run unit tests
+      - name: Run Google Tests
+        run: ctest --test-dir build --output-on-failure
