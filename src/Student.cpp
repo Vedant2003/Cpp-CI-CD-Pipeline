@@ -1,27 +1,45 @@
+
 #include "Student.h"
 #include <iostream>
+#include <utility>
 
-Student::Student(int id, std::string name, double marks) {
-    this->id = id;
-    this->name = name;
-    this->marks = marks;
+namespace {
+    constexpr double PASS_MARKS = 40;
+    constexpr double GRADE_A_MARKS = 90;
+    constexpr double GRADE_B_MARKS = 75;
+    constexpr double GRADE_C_MARKS = 60;
 }
 
-void Student::displayDetails() {
-    std::cout << "Student ID: " << id << std::endl;
-    std::cout << "Student Name: " << name << std::endl;
-    std::cout << "Student Marks: " << marks << std::endl;
+Student::Student(int id, std::string name, double marks)
+    : id(id), name(std::move(name)), marks(marks) {
 }
 
-bool Student::hasPassed() {
-    return marks >= 40;
+void Student::displayDetails() const {
+    std::cout << "Student ID: " << id << '\n';
+    std::cout << "Student Name: " << name << '\n';
+    std::cout << "Student Marks: " << marks << '\n';
 }
 
-char Student::calculateGrade() {
-    if (marks >= 90) return 'A';
-    else if (marks >= 75) return 'B';
-    else if (marks >= 60) return 'C';
-    else if (marks >= 40) return 'D';
+bool Student::hasPassed() const {
+    return marks >= PASS_MARKS;
+}
+
+char Student::calculateGrade() const {
+    if (marks >= GRADE_A_MARKS) {
+        return 'A';
+    }
+
+    if (marks >= GRADE_B_MARKS) {
+        return 'B';
+    }
+
+    if (marks >= GRADE_C_MARKS) {
+        return 'C';
+    }
+
+    if (marks >= PASS_MARKS) {
+        return 'D';
+    }
 
     return 'F';
 }

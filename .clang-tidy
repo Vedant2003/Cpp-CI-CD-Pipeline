@@ -1,0 +1,17 @@
+
+Checks: >
+  -*,
+  bugprone-*,
+  performance-*,
+  readability-*
+
+WarningsAsErrors: ''
+
+HeaderFilterRegex: 'src/.*'
+
+FormatStyle: file
+
+CheckOptions:
+  readability-identifier-length.MinimumVariableNameLength: 2
+  readability-identifier-length.MinimumParameterNameLength: 2
+  readability-magic-numbers.IgnorePowersOf2IntegerValues: true

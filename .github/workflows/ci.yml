@@ -14,18 +14,22 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Step 1: Download repository code
       - name: Checkout Repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
-      # Step 2: Configure CMake
+      - name: Install Clang-Tidy
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y clang-tidy
+
       - name: Configure CMake
-        run: cmake -S . -B build
+        run: cmake -S . -B build -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
 
-      # Step 3: Build C++ application and tests
       - name: Build Project
         run: cmake --build build --parallel 4
 
-      # Step 4: Run unit tests
       - name: Run Google Tests
         run: ctest --test-dir build --output-on-failure
+
+      - name: Run Clang-Tidy
+        run: bash scripts/run-clang-tidy-ci.sh

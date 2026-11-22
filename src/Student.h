@@ -3,23 +3,22 @@
 #define STUDENT_H
 
 #include <string>
-using namespace std;
 
 class Student {
 
 private:
     int id;
-    string name;
+    std::string name;
     double marks;
 
 public:
-    Student(int id, string name, double marks);
+    Student(int id, std::string name, double marks);
 
-    void displayDetails();
+    void displayDetails() const;
 
-    bool hasPassed();
+    bool hasPassed() const;
 
-    char calculateGrade();
+    char calculateGrade() const;
 };
 
 #endif
