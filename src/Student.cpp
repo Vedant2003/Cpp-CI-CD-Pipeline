@@ -15,6 +15,8 @@ Student::Student(int id, std::string name, double marks)
 }
 
 void Student::displayDetails() const {
+    int unusedVariable = 100; // INTENTIONAL WARNING FOR CI TESTING
+
     std::cout << "Student ID: " << id << '\n';
     std::cout << "Student Name: " << name << '\n';
     std::cout << "Student Marks: " << marks << '\n';
