@@ -1,18 +1,21 @@
-#include <iostream>
 #include "Student.h"
+#include <iostream>
 
 int main() {
-    Student s1(101, "Vedant", 85);
+    constexpr int STUDENT_ID = 101;
+    constexpr double STUDENT_MARKS = 85;
 
-    std::cout << "----- Student Management System -----" << std::endl;
+    Student s1(STUDENT_ID, "Vedant", STUDENT_MARKS);
+
+    std::cout << "----- Student Management System -----\n";
 
     s1.displayDetails();
 
     std::cout << "Passed: "
-              << (s1.hasPassed() ? "Yes" : "No") << std::endl;
+              << (s1.hasPassed() ? "Yes" : "No") << '\n';
 
     std::cout << "Grade: "
-              << s1.calculateGrade() << std::endl;
+              << s1.calculateGrade() << '\n';
 
     return 0;
 }

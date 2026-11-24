@@ -21,7 +21,7 @@ SOURCE_FILES=(
 
 clang-tidy \
     -p "$ROOT_DIR/build" \
-    --header-filter='.*' \
+    --header-filter='.*(/src/|/tests/).*' \
     --warnings-as-errors='*' \
     "${SOURCE_FILES[@]}"
 

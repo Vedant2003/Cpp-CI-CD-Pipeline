@@ -1,25 +1,38 @@
-
 #!/bin/bash
 
-# Stop immediately if any command fails
 set -euo pipefail
 
-# Find project root
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$ROOT_DIR"
 
-echo "Running Clang-Tidy in CI..."
+BUILD_DIR="$ROOT_DIR/build"
 
-# Verify compilation database exists
-if [ ! -f "$ROOT_DIR/build/compile_commands.json" ]; then
+GCC_VERSION="16.1.0"
+MINGW_GCC_ROOT="C:/ProgramData/mingw64/mingw64/lib/gcc/x86_64-w64-mingw32/$GCC_VERSION"
+
+echo "Running Clang-Tidy..."
+
+if [ ! -f "$BUILD_DIR/compile_commands.json" ]; then
     echo "ERROR: compile_commands.json not found!"
+    echo "Build the project with CMAKE_EXPORT_COMPILE_COMMANDS enabled."
     exit 1
 fi
 
-# Run Clang-Tidy and treat all reported warnings as errors
 clang-tidy \
-    -p "$ROOT_DIR/build" \
-    --warnings-as-errors='*' \
-    "$ROOT_DIR/src/Student.cpp"
+    -p "$BUILD_DIR" \
+    --extra-arg=-target \
+    --extra-arg=x86_64-w64-windows-gnu \
+    --extra-arg=-isystem \
+    --extra-arg="$MINGW_GCC_ROOT/include/c++" \
+    --extra-arg=-isystem \
+    --extra-arg="$MINGW_GCC_ROOT/include/c++/x86_64-w64-mingw32" \
+    --extra-arg=-isystem \
+    --extra-arg="$MINGW_GCC_ROOT/include/c++/backward" \
+    --extra-arg=-isystem \
+    --extra-arg=C:/ProgramData/mingw64/mingw64/x86_64-w64-mingw32/include \
+    --header-filter='src/.*' \
+    src/main.cpp \
+    src/Student.cpp \
+    tests/test_student.cpp
 
-echo "Clang-Tidy analysis completed successfully."
+echo "Clang-Tidy completed successfully!"
