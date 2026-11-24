@@ -2,6 +2,7 @@
 Checks: >
   -*,
   bugprone-*,
+  -bugprone-easily-swappable-parameters,
   performance-*,
   readability-*
 
@@ -15,3 +16,4 @@ CheckOptions:
   readability-identifier-length.MinimumVariableNameLength: 2
   readability-identifier-length.MinimumParameterNameLength: 2
   readability-magic-numbers.IgnorePowersOf2IntegerValues: true
+
